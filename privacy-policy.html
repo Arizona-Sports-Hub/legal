@@ -76,7 +76,8 @@
     <p>
       Statewide Sports Hub ("we", "us", or "our") operates the Statewide Sports Hub mobile application
       (the "App") and the related website at statewidesportshub.com. We are based in Arizona, USA,
-      and operate as a sole proprietorship doing business as Statewide Sports Hub.
+      and operate as a sole proprietorship doing business as Statewide Sports Hub. The App is
+      available to users across the United States.
     </p>
 
     <p>
@@ -90,9 +91,9 @@
       profile information you choose to share (name, gender, sports, skill level, optional avatar
       photo), the matches and tournaments you create or join, and the messages and ratings you
       post. We use Amazon Web Services to host everything, Google Firebase to send push
-      notifications and gather basic in-app analytics, and OpenStreetMap to look up locations
-      when you tap "Use current location". We do not sell your data and we do not collect your
-      payment information.
+      notifications and gather basic in-app analytics, and Apple Maps (with OpenStreetMap
+      Nominatim as a fallback) to look up locations when you tap "Use current location".
+      We do not sell your data and we do not collect your payment information.
     </div>
 
     <hr />
@@ -174,16 +175,14 @@
     <p>When you tap that button, the App:</p>
     <ul>
       <li>
-        Reads your current GPS coordinates and sends them to OpenStreetMap Nominatim and/or
-        Photon (Komoot) so you can choose a human-readable address.
+        Reads your current GPS coordinates and sends them to Apple Maps (MapKit JS) to search
+        for and reverse-geocode a human-readable address. If Apple Maps returns no results,
+        the App falls back to OpenStreetMap Nominatim for the same purpose.
       </li>
       <li>
         Saves the chosen latitude, longitude, and address on the match or tournament record so
         other players can find the venue. This is the location of the <em>event</em>, not a
         running record of where you have been.
-      </li>
-      <li>
-        Restricts event creation to coordinates inside Arizona.
       </li>
     </ul>
 
@@ -276,9 +275,14 @@
           <td>Aggregate product analytics. Production builds only.</td>
         </tr>
         <tr>
-          <td>OpenStreetMap Nominatim and Photon (Komoot)</td>
+          <td>Apple Maps (MapKit JS)</td>
           <td>GPS coordinates and free-text place queries when you use location features.</td>
-          <td>Look up addresses for the locations you choose.</td>
+          <td>Primary service for address lookup and reverse geocoding.</td>
+        </tr>
+        <tr>
+          <td>OpenStreetMap Nominatim</td>
+          <td>GPS coordinates and free-text place queries when you use location features.</td>
+          <td>Fallback address lookup when Apple Maps returns no results.</td>
         </tr>
       </tbody>
     </table>
